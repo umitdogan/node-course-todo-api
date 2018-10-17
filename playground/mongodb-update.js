@@ -31,7 +31,6 @@ client.connect((err, client) => {
 
     //client.close(()=> {console.log('Closed the connection of MongoDB server. ')});
 
-    
 });
 
 
