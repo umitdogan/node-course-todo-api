@@ -23,7 +23,7 @@ client.connect((err, client) => {
 
         db.collection('User').findOneAndUpdate({_id: new ObjectID('5bc5eb14a9993e2d54ae6cd2')},{ //_id: 2
             $set:{name : "Hasan"
-        }, $inc: {age: 35}},{ //, $rename: {name: 'lastname'}, $currentDate:{"lastModifiedDate": { $type: "timestamp" }}
+        }, $inc: {age: 35}, $currentDate:{"lastModifiedDate": { $type: "timestamp" }}},{ //, $rename: {name: 'lastname'}
             returnOriginal:false
             }).then((result)=> {console.log(result)});
     
@@ -31,6 +31,7 @@ client.connect((err, client) => {
 
     //client.close(()=> {console.log('Closed the connection of MongoDB server. ')});
 
+    
 });
 
 
