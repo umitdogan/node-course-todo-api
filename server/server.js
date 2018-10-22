@@ -7,7 +7,7 @@ var { User } = require('./models/user');
 var { Todo } = require('./models/todo');
 var app = express();
 const port = process.env.PORT || 3000;
-console.log(process.env);
+//console.log(process.env);
 
 var app = express();
 
@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 
 app.post('/todos', (req, res) => {
     //console.log (req.body);
+    
     var todo = new Todo({
         text: req.body.text
     });
@@ -44,6 +45,23 @@ app.get('/todos/:id', (req,res) =>{
     Todo.findById(id).then((todo)=> {
         if (!todo) {
             return res.status(404).send();
+        }
+        return res.send(todo);
+    }).catch((e)=>{
+        return res.status(404).send();
+    });
+});
+
+app.delete('/todos/:id', (req,res) =>{
+    id = req.params.id;
+    
+    if (!ObjectID.isValid(id)) {
+        return res.status(404).send({error: 'id is invalid.'});
+    }
+
+    Todo.findByIdAndRemove(id).then((todo)=> {
+        if (!todo) {
+            return res.status(404).send({error: 'no document.'});
         }
         return res.send(todo);
     }).catch((e)=>{
