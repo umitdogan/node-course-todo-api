@@ -20,7 +20,7 @@ app.post('/todos', (req, res) => {
         text: req.body.text
     });
     todo.save().then((doc) => {
-        console.log(doc);
+        //console.log(doc);
         res.send(doc);
     }, (e) => {
         res.status(400).send(e);
@@ -46,7 +46,7 @@ app.get('/todos/:id', (req,res) =>{
         if (!todo) {
             return res.status(404).send();
         }
-        return res.send(todo);
+        return res.send({todo});
     }).catch((e)=>{
         return res.status(404).send();
     });
@@ -63,7 +63,7 @@ app.delete('/todos/:id', (req,res) =>{
         if (!todo) {
             return res.status(404).send({error: 'no document.'});
         }
-        return res.send(todo);
+        return res.send({todo});
     }).catch((e)=>{
         return res.status(400).send();
     });
