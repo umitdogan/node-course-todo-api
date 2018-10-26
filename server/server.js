@@ -4,6 +4,8 @@ const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
 const {ObjectID} = require('mongodb');
+const {SHA256} = require('crypto-js');
+
 
 var { mongoose } = require('./db/mongoose');
 var { User } = require('./models/user');
@@ -98,6 +100,22 @@ app.patch('/todos/:id', (req,res) =>{
     });
 
 
+});
+
+// POST /User
+app.post('/users', (req, res) => {
+    //console.log (req.body);
+
+    var body = _.pick(req.body,['email','password']);
+    var user = new User(body);
+    
+    user.save().then((user) => {
+        return user.generateAuthToken(); 
+    }).then((token)=>{
+        res.header('x-auth',token).send(user);
+    }).catch((e)=>{
+        res.status(400).send(e);
+    });
 });
 
 app.listen(port, () => {
