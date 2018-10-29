@@ -1,18 +1,38 @@
 const {SHA256} = require('crypto-js');
 const jwt = require('jsonwebtoken');
+const bcrypt = require ('bcryptjs');
 
-var data ={
-    id: 10,
-    name: "Ahmet",
-    surname: "Yılmaz",
-};
-var token = jwt.sign(data,"secretkeyword");
+var password = "123abc!";
 
-console.log(token);
+bcrypt.genSalt(10,(err,salt)=>{
+    bcrypt.hash(password, salt, (err, hash)=> {
+        console.log(hash);
+    })
+});
 
-var verify = jwt.verify(token, "secretkeyword");
+var hashedPassport = ['2a$10$hYiT8Gu2zspYQcMurvUa1OtHmiLTwZzIaLW9oCrgNMUojtQUFvv3C',
+    '$2a$10$lghV4SJa3t86Bj5xZhqyVO2uSmKkRL0TE6zftKL62OUCsqInRQFTy',
+    '$2a$10$CWc5U.cYReu8PeWNHZivo.gERgrvEc.FaNH5NCnE87wRcswErpWi.',
+    '$2a$11$gsrPbbquLMVbzep8nQeaGuHS7PkwPJSx7dYFR.9cO.Wji47a.FY3C'];
 
-console.log(verify);
+    bcrypt.compare(password, hashedPassport[4], (err,res)=>{
+        console.log(res);
+    });
+
+
+
+// var data ={
+//     id: 10,
+//     name: "Ahmet",
+//     surname: "Yılmaz",
+// };
+// var token = jwt.sign(data,"secretkeyword");
+
+// console.log(token);
+
+// var verify = jwt.verify(token, "secretkeyword");
+
+// console.log(verify);
 
 
 
