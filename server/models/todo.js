@@ -8,7 +8,11 @@ var Todo = mongoose.model('ToDo', {
     },
     completed: {type: Boolean, default: false},
     solution: {type: String, default: null},
-    completedAt: {type: Number}
+    completedAt: {type: Number},
+    _creator:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    }
 });
 
 module.exports = {
